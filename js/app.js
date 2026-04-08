@@ -200,6 +200,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const handleSearchInput = (e) => {
     const value = e.target.value;
     syncSearchInputs(value);
+    if (typeof cancelTrendingFetch === 'function') cancelTrendingFetch();
     debouncedSearch(value);
   };
 
@@ -218,10 +219,56 @@ document.addEventListener('DOMContentLoaded', () => {
 
   /* ─── Watchlist Screen ──────────────────────────────────── */
 
+  const renderWatchlistStats = (list) => {
+    const statsEl = document.getElementById('watchlist-stats');
+    if (!statsEl) return;
+    if (list.length < 3) { statsEl.classList.add('hidden'); return; }
+
+    // Avg rating
+    const rated = list.filter(m => m.imdbRating && m.imdbRating !== 'N/A');
+    const avgRating = rated.length
+      ? (rated.reduce((s, m) => s + parseFloat(m.imdbRating), 0) / rated.length).toFixed(1)
+      : null;
+
+    // Genre breakdown from trending cache
+    const genreCount = {};
+    list.forEach(m => {
+      if (!m.Genre) return;
+      m.Genre.split(',').forEach(g => {
+        const g2 = g.trim();
+        genreCount[g2] = (genreCount[g2] || 0) + 1;
+      });
+    });
+    const topGenres = Object.entries(genreCount)
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 3)
+      .map(([g]) => `<span class="modal-meta-chip">${g}</span>`)
+      .join('');
+
+    statsEl.classList.remove('hidden');
+    statsEl.innerHTML = `
+      <div class="wl-stats-inner">
+        <div class="wl-stat">
+          <span class="wl-stat-value">${list.length}</span>
+          <span class="wl-stat-label">Movies</span>
+        </div>
+        ${avgRating ? `<div class="wl-stat">
+          <span class="wl-stat-value" style="color:#FFC107">⭐ ${avgRating}</span>
+          <span class="wl-stat-label">Avg Rating</span>
+        </div>` : ''}
+        ${topGenres ? `<div class="wl-stat wl-stat-genres">
+          <span class="wl-stat-label" style="margin-bottom:6px;">Top Genres</span>
+          <div class="wl-genres">${topGenres}</div>
+        </div>` : ''}
+      </div>
+    `;
+  };
+
   const renderWatchlistScreen = () => {
     const list = getWatchlist();
     updateWatchlistBadge();
     if (randomBtn) randomBtn.classList.toggle('hidden', list.length === 0);
+    renderWatchlistStats(list);
     if (list.length === 0) {
       renderEmptyState('watchlist-grid', 'watchlist');
       setTimeout(() => {
@@ -231,6 +278,22 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     renderMovieCards(list, 'watchlist-grid');
   };
+
+  /* ─── Card Click → Open Modal ──────────────────────────── */
+
+  const handleCardClick = (e) => {
+    // Don't open modal if clicking the watchlist button
+    if (e.target.closest('.btn-watchlist') || e.target.closest('.modal-watchlist-btn')) return;
+    const card = e.target.closest('.movie-card');
+    if (!card) return;
+    const imdbId = card.dataset.id;
+    if (!imdbId) return;
+    openMovieModal(imdbId, {});
+  };
+
+  discoverResults?.addEventListener('click', handleCardClick);
+  watchlistGrid?.addEventListener('click', handleCardClick);
+  trendingSection?.addEventListener('click', handleCardClick);
 
   /* ─── Card Button Click (event delegation) ──────────────── */
 
@@ -242,14 +305,25 @@ document.addEventListener('DOMContentLoaded', () => {
     const { id: imdbId, title, year, poster, rating } = btn.dataset;
     const movieObj = { imdbID: imdbId, Title: title, Year: year, Poster: poster, imdbRating: rating };
 
-    if (isInWatchlist(imdbId)) {
-      removeFromWatchlist(imdbId);
-      updateCardButton(imdbId, false);
-      showToast(`"${title}" removed from Watchlist`, 'remove');
-    } else {
+    const isAdding = !isInWatchlist(imdbId);
+    if (isAdding) {
       addToWatchlist(movieObj);
       updateCardButton(imdbId, true);
       showToast(`"${title}" added to Watchlist ✓`, 'success');
+      // 🎉 Confetti burst from button position
+      const rect = btn.getBoundingClientRect();
+      runConfetti(rect.left + rect.width / 2, rect.top + rect.height / 2);
+    } else {
+      removeFromWatchlist(imdbId);
+      updateCardButton(imdbId, false);
+      showToast(`"${title}" removed from Watchlist`, 'remove');
+    }
+
+    // Also update modal button if modal is open
+    const modalBtn = document.querySelector('.modal-watchlist-btn');
+    if (modalBtn && modalBtn.dataset.id === imdbId) {
+      modalBtn.textContent = isAdding ? '✓ In Watchlist' : '＋ Add to Watchlist';
+      modalBtn.className = isAdding ? 'btn-watchlist in-list modal-watchlist-btn' : 'btn-watchlist modal-watchlist-btn';
     }
 
     updateWatchlistBadge();
@@ -259,6 +333,7 @@ document.addEventListener('DOMContentLoaded', () => {
   discoverResults?.addEventListener('click', handleCardButtonClick);
   watchlistGrid?.addEventListener('click', handleCardButtonClick);
   trendingSection?.addEventListener('click', handleCardButtonClick);
+  document.getElementById('movie-modal')?.addEventListener('click', handleCardButtonClick);
 
   /* ─── Random Movie Night ────────────────────────────────── */
 
@@ -271,7 +346,26 @@ document.addEventListener('DOMContentLoaded', () => {
     card.classList.add('spotlight');
     card.scrollIntoView({ behavior: 'smooth', block: 'center' });
     showToast(`🎲 Tonight: "${movie.Title}"`, 'success');
+    // Confetti burst from card center
+    const rect = card.getBoundingClientRect();
+    runConfetti(rect.left + rect.width / 2, rect.top + rect.height / 3);
     setTimeout(() => card.classList.remove('spotlight'), 3000);
+  });
+
+  /* ─── Surprise Me Button ────────────────────────────────── */
+
+  document.getElementById('surprise-btn')?.addEventListener('click', () => {
+    if (!trendingMovies.length) {
+      showToast('Still loading movies, try again in a moment!', 'remove');
+      return;
+    }
+    const filtered = selectedGenre === 'All'
+      ? trendingMovies
+      : trendingMovies.filter(m => m.Genre && m.Genre.includes(selectedGenre));
+    if (!filtered.length) return;
+    const randomMovie = filtered[Math.floor(Math.random() * filtered.length)];
+    openMovieModal(randomMovie.imdbID, randomMovie);
+    showToast(`🎲 How about "${randomMovie.Title}"?`, 'success');
   });
 
   /* ─── Keyboard Navigation ───────────────────────────────── */
