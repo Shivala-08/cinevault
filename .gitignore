@@ -1,8 +1,8 @@
 # 🍿 CineVault Environments
 .env
 
-# 🔑 Private Config
-js/config.js
+# 🔑 Private Config (config.js is now tracked for Vercel deployment)
+# js/config.js
 
 # 💻 OS/IDE Clutter
 .DS_Store
