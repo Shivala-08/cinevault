@@ -15,12 +15,12 @@
 </head>
 <body>
 
-  <!-- ========== LOADING SPINNER OVERLAY ========== -->
+  <!-- spinner overlay -->
   <div id="spinner-overlay" class="spinner-overlay hidden" aria-hidden="true">
     <div class="spinner"></div>
   </div>
 
-  <!-- ========== MOVIE DETAIL MODAL ========== -->
+  <!-- movie detail modal -->
   <div id="movie-modal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="modal-title">
     <div class="modal-card" id="modal-card">
       <button class="modal-close" id="modal-close" aria-label="Close modal">✕</button>
@@ -30,13 +30,13 @@
     </div>
   </div>
 
-  <!-- ========== CONFETTI CANVAS ========== -->
+  <!-- confetti canvas -->
   <canvas id="confetti-canvas" style="position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:7999;"></canvas>
 
-  <!-- ========== TOAST NOTIFICATION ========== -->
+  <!-- toast -->
   <div id="toast" class="toast hidden" role="alert" aria-live="polite"></div>
 
-  <!-- ========== NAVBAR ========== -->
+  <!-- navbar -->
   <header class="navbar" id="navbar">
     <div class="navbar-inner">
 
@@ -78,13 +78,13 @@
     </div>
   </header>
 
-  <!-- ========== MAIN CONTENT ========== -->
+  <!-- main -->
   <main class="main-content" id="main-content">
 
-    <!-- ====== DISCOVER SCREEN ====== -->
+    <!-- discover -->
     <section id="discover-screen" class="screen active" role="tabpanel" aria-labelledby="tab-discover">
 
-      <!-- Mobile Search Bar -->
+      <!-- mobile search -->
       <div class="mobile-search-wrap" id="mobile-search-wrap">
         <div class="search-input-wrap">
           <span class="search-icon">🔍</span>
@@ -100,7 +100,7 @@
         </div>
       </div>
 
-      <!-- Trending Section (default view, hidden during search) -->
+      <!-- trending -->
       <div id="trending-section" class="trending-section">
         <div class="trending-header">
           <div class="section-title-group">
@@ -116,18 +116,18 @@
         <div id="trending-grid" class="results-container"></div>
       </div>
 
-      <!-- Sort / Filter Bar (shown with search results) -->
+      <!-- sort bar -->
       <div id="sort-filter-bar" class="sort-filter-bar hidden" role="toolbar" aria-label="Sort and filter results"></div>
 
-      <!-- Search Results Container -->
+      <!-- search results -->
       <div id="discover-results" class="results-container hidden"></div>
 
-      <!-- Pagination -->
+      <!-- pagination -->
       <div id="pagination-container" class="pagination-container hidden"></div>
 
     </section>
 
-    <!-- ====== WATCHLIST SCREEN ====== -->
+    <!-- watchlist -->
     <section id="watchlist-screen" class="screen hidden" role="tabpanel" aria-labelledby="tab-watchlist">
 
       <div class="watchlist-header">
@@ -152,7 +152,7 @@
 
   </main>
 
-  <!-- ========== SCRIPTS ========== -->
+  <!-- scripts -->
   <script src="js/config.js"></script>
   <script src="js/api.js"></script>
   <script src="js/watchlist.js"></script>

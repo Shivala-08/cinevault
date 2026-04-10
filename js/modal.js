@@ -1,18 +1,11 @@
-/**
- * modal.js — Cinematic Movie Detail Modal
- * Opens on card click (not on watchlist button), fetches full details via OMDb
- */
-
 const openMovieModal = async (imdbId, basicMovie) => {
   const overlay = document.getElementById('movie-modal');
   const content = document.getElementById('modal-content');
   if (!overlay || !content) return;
 
-  // Show modal with loading state
   overlay.classList.remove('hidden');
   document.body.style.overflow = 'hidden';
 
-  // Render skeleton loader first
   content.innerHTML = `
     <div class="modal-skeleton">
       <div class="modal-skeleton-poster skeleton"></div>
@@ -27,10 +20,8 @@ const openMovieModal = async (imdbId, basicMovie) => {
     </div>
   `;
 
-  // Animate in
   requestAnimationFrame(() => overlay.classList.add('open'));
 
-  // Fetch full details
   const movie = await fetchMovieDetails(imdbId);
   if (!movie) {
     content.innerHTML = `
@@ -113,7 +104,6 @@ const closeMovieModal = () => {
   setTimeout(() => overlay.classList.add('hidden'), 300);
 };
 
-// Modal close handlers
 document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('modal-close')?.addEventListener('click', closeMovieModal);
 

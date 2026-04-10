@@ -1,8 +1,3 @@
-/**
- * confetti.js — Lightweight canvas confetti burst on watchlist add
- * Fires a brief burst of colored particles from the clicked button position.
- */
-
 const confettiCanvas = document.getElementById('confetti-canvas');
 const confettiCtx = confettiCanvas ? confettiCanvas.getContext('2d') : null;
 let confettiParticles = [];
@@ -67,13 +62,11 @@ const runConfetti = (originX, originY) => {
   if (!confettiCtx || !confettiCanvas) return;
   resizeConfettiCanvas();
 
-  // Spawn burst
-  const COUNT = 55;
-  for (let i = 0; i < COUNT; i++) {
+  for (let i = 0; i < 55; i++) {
     confettiParticles.push(new ConfettiParticle(originX, originY));
   }
 
-  if (confettiRAF) return; // already animating
+  if (confettiRAF) return;
 
   const animate = () => {
     confettiCtx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);

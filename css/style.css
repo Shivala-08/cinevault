@@ -1,12 +1,6 @@
-/* ============================================================
-   CineVault — style.css
-   Dark Minimalist Cinema Theme
-   ============================================================ */
-
-/* ─── Google Fonts ─────────────────────────────────────────── */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
-/* ─── CSS Custom Properties ────────────────────────────────── */
+/* design tokens */
 :root {
   /* Colors */
   --clr-bg:           #0F0F0F;
@@ -53,7 +47,7 @@
   --navbar-h: 64px;
 }
 
-/* ─── Reset & Base ─────────────────────────────────────────── */
+/* reset */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 html { scroll-behavior: smooth; }
@@ -65,7 +59,6 @@ body {
   min-height: 100vh;
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
-  /* 🎬 Custom clapperboard cursor */
   cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Crect x='2' y='10' width='28' height='20' rx='3' fill='%231a1a1a' stroke='%23E50914' stroke-width='1.5'/%3E%3Crect x='2' y='4' width='28' height='8' rx='2' fill='%23E50914'/%3E%3Cline x1='8' y1='4' x2='6' y2='12' stroke='white' stroke-width='2'/%3E%3Cline x1='14' y1='4' x2='12' y2='12' stroke='white' stroke-width='2'/%3E%3Cline x1='20' y1='4' x2='18' y2='12' stroke='white' stroke-width='2'/%3E%3Cline x1='26' y1='4' x2='24' y2='12' stroke='white' stroke-width='2'/%3E%3Ccircle cx='16' cy='20' r='4' fill='none' stroke='%23E50914' stroke-width='1.5'/%3E%3Ccircle cx='16' cy='20' r='1.5' fill='%23E50914'/%3E%3C/svg%3E") 4 4, auto;
 }
 
@@ -80,16 +73,14 @@ code {
   color: #FFA726;
 }
 
-/* ─── Scrollbar ─────────────────────────────────────────────── */
+/* scrollbar */
 ::-webkit-scrollbar { width: 6px; height: 6px; }
 ::-webkit-scrollbar-track { background: var(--clr-bg); }
 ::-webkit-scrollbar-thumb { background: var(--clr-accent); border-radius: var(--r-badge); }
 ::-webkit-scrollbar-thumb:hover { background: var(--clr-accent-hover); }
 
-/* ─── Utility ───────────────────────────────────────────────── */
 .hidden { display: none !important; }
 
-/* 🎥 Camera cursor on all interactive elements */
 a, button, [role="button"], [tabindex], select, label,
 .movie-card, .genre-chip, .sort-btn, .nav-tab, .page-btn,
 .btn-watchlist, .btn-surprise, .btn-random, .btn-accent,
@@ -97,7 +88,7 @@ a, button, [role="button"], [tabindex], select, label,
   cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 28 28'%3E%3Crect x='1' y='7' width='18' height='14' rx='3' fill='%231a1a1a' stroke='%23E50914' stroke-width='1.5'/%3E%3Cpolygon points='19,10 27,7 27,21 19,18' fill='%23E50914'/%3E%3Ccircle cx='10' cy='14' r='3.5' fill='none' stroke='white' stroke-width='1.5'/%3E%3Ccircle cx='10' cy='14' r='1.2' fill='white'/%3E%3C/svg%3E") 4 4, pointer;
 }
 
-/* ─── Keyframes ─────────────────────────────────────────────── */
+/* keyframes */
 
 @keyframes spin {
   to { transform: rotate(360deg); }
@@ -133,7 +124,7 @@ a, button, [role="button"], [tabindex], select, label,
   100% { transform: scale(1); }
 }
 
-/* ─── Loading Spinner ───────────────────────────────────────── */
+
 .spinner-overlay {
   position: fixed;
   inset: 0;
@@ -154,7 +145,7 @@ a, button, [role="button"], [tabindex], select, label,
   animation: spin 0.75s linear infinite;
 }
 
-/* ─── Toast Notification ────────────────────────────────────── */
+
 .toast {
   position: fixed;
   bottom: var(--sp-3);
@@ -195,7 +186,7 @@ a, button, [role="button"], [tabindex], select, label,
   color: #EF9A9A;
 }
 
-/* ─── Navbar ─────────────────────────────────────────────────── */
+/* navbar */
 .navbar {
   position: fixed;
   top: 0;
@@ -219,7 +210,7 @@ a, button, [role="button"], [tabindex], select, label,
   gap: var(--sp-2);
 }
 
-/* Logo */
+
 .navbar-logo {
   display: flex;
   align-items: center;
@@ -244,7 +235,7 @@ a, button, [role="button"], [tabindex], select, label,
 
 .navbar-logo:focus-visible .logo-text { color: var(--clr-accent); }
 
-/* Center Search */
+
 .navbar-search {
   flex: 1;
   max-width: 480px;
@@ -252,7 +243,7 @@ a, button, [role="button"], [tabindex], select, label,
   display: none; /* shown on desktop */
 }
 
-/* Nav Tabs */
+
 .navbar-tabs {
   display: flex;
   align-items: center;
@@ -299,7 +290,7 @@ a, button, [role="button"], [tabindex], select, label,
 .tab-icon { font-size: 16px; }
 .tab-label { white-space: nowrap; }
 
-/* Watchlist Badge */
+
 .watchlist-badge {
   min-width: 18px;
   height: 18px;
@@ -315,13 +306,13 @@ a, button, [role="button"], [tabindex], select, label,
   animation: badgePop 0.3s ease;
 }
 
-/* Mobile Search (below tabs) */
+
 .mobile-search-wrap {
   padding: var(--sp-2) var(--sp-2) 0;
   display: block;
 }
 
-/* ─── Search Input ──────────────────────────────────────────── */
+/* search */
 .search-input-wrap {
   position: relative;
   width: 100%;
@@ -375,13 +366,13 @@ a, button, [role="button"], [tabindex], select, label,
 
 .search-clear-btn:hover { color: var(--clr-text); }
 
-/* ─── Main Content ──────────────────────────────────────────── */
+
 .main-content {
   padding-top: var(--navbar-h);
   min-height: 100vh;
 }
 
-/* ─── Screens ───────────────────────────────────────────────── */
+
 .screen {
   max-width: 1400px;
   margin: 0 auto;
@@ -392,7 +383,7 @@ a, button, [role="button"], [tabindex], select, label,
   animation: screenFadeIn 0.3s ease both;
 }
 
-/* ─── Movies Grid ───────────────────────────────────────────── */
+/* grid */
 .movies-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -400,7 +391,7 @@ a, button, [role="button"], [tabindex], select, label,
   margin-top: var(--sp-2);
 }
 
-/* ─── Movie Card ─────────────────────────────────────────────── */
+/* cards */
 .movie-card {
   background: var(--clr-surface);
   border-radius: var(--r-card);
@@ -422,13 +413,13 @@ a, button, [role="button"], [tabindex], select, label,
   box-shadow: 0 0 0 2px var(--clr-accent);
 }
 
-/* Spotlight (Random Movie Night) */
+
 .movie-card.spotlight {
   animation: pulse-glow 1s ease infinite;
   border-color: var(--clr-accent);
 }
 
-/* Poster */
+
 .card-poster-wrap {
   position: relative;
   width: 100%;
@@ -475,7 +466,7 @@ a, button, [role="button"], [tabindex], select, label,
   text-transform: uppercase;
 }
 
-/* Card Body */
+
 .card-body {
   padding: 14px;
   display: flex;
@@ -518,7 +509,7 @@ a, button, [role="button"], [tabindex], select, label,
 
 .rating-na { color: var(--clr-text-2); }
 
-/* ─── Watchlist Button ──────────────────────────────────────── */
+/* watchlist button */
 .btn-watchlist {
   display: block;
   width: 100%;
@@ -558,7 +549,7 @@ a, button, [role="button"], [tabindex], select, label,
   box-shadow: 0 4px 16px rgba(229, 9, 20, 0.5);
 }
 
-/* ─── Skeleton Loaders ──────────────────────────────────────── */
+/* skeletons */
 .skeleton {
   background: linear-gradient(
     90deg,
@@ -583,7 +574,7 @@ a, button, [role="button"], [tabindex], select, label,
 .skeleton-meta   { height: 13px; width: 55%; }
 .skeleton-btn    { height: 38px; width: 100%; margin-top: 6px; border-radius: var(--r-btn); }
 
-/* ─── Empty State ───────────────────────────────────────────── */
+/* empty state */
 .empty-state {
   display: flex;
   flex-direction: column;
@@ -620,7 +611,7 @@ a, button, [role="button"], [tabindex], select, label,
   margin-top: var(--sp-1);
 }
 
-/* ─── Generic Buttons ───────────────────────────────────────── */
+/* buttons */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -650,7 +641,7 @@ a, button, [role="button"], [tabindex], select, label,
 
 .btn-accent:focus-visible { box-shadow: 0 0 0 2px #fff, 0 0 0 4px var(--clr-accent); }
 
-/* Random Movie Night button */
+
 .btn-random {
   background: var(--clr-accent);
   color: #fff;
@@ -666,7 +657,7 @@ a, button, [role="button"], [tabindex], select, label,
   transform: scale(1.04);
 }
 
-/* ─── Watchlist Header ──────────────────────────────────────── */
+
 .watchlist-header {
   display: flex;
   align-items: center;
@@ -693,12 +684,12 @@ a, button, [role="button"], [tabindex], select, label,
   color: var(--clr-text-2);
 }
 
-/* ─── Results Container ─────────────────────────────────────── */
+
 .results-container {
   width: 100%;
 }
 
-/* ─── Pagination ─────────────────────────────────────────────── */
+/* pagination */
 .pagination-container {
   padding: var(--sp-3) 0 var(--sp-2);
   max-width: 1400px;
@@ -751,7 +742,7 @@ a, button, [role="button"], [tabindex], select, label,
 
 .page-info strong { color: var(--clr-text); font-weight: 600; }
 
-/* ─── Responsive: Tablet (600px+) ──────────────────────────── */
+/* tablet */
 @media (min-width: 600px) {
   .mobile-search-wrap { display: none; }
   .navbar-search { display: block; }
@@ -764,7 +755,7 @@ a, button, [role="button"], [tabindex], select, label,
   .pagination-container { padding-left: var(--sp-3); padding-right: var(--sp-3); }
 }
 
-/* ─── Responsive: Desktop (900px+) ─────────────────────────── */
+/* desktop */
 @media (min-width: 900px) {
   .movies-grid {
     grid-template-columns: repeat(4, 1fr);
@@ -773,20 +764,20 @@ a, button, [role="button"], [tabindex], select, label,
   .logo-text { font-size: 24px; }
 }
 
-/* ─── Responsive: Large (1200px+) ──────────────────────────── */
+
 @media (min-width: 1200px) {
   .movies-grid {
     grid-template-columns: repeat(5, 1fr);
   }
 }
 
-/* ─── Focus visible global ──────────────────────────────────── */
+
 :focus-visible {
   outline: 2px solid var(--clr-accent);
   outline-offset: 2px;
 }
 
-/* ─── Trending Section ──────────────────────────────────────── */
+/* trending section */
 
 .trending-section {
   padding-top: var(--sp-2);
@@ -818,7 +809,7 @@ a, button, [role="button"], [tabindex], select, label,
   color: var(--clr-text-2);
 }
 
-/* ─── Genre Chips ───────────────────────────────────────────── */
+/* genre chips */
 
 .genre-chips {
   display: flex;
@@ -860,7 +851,7 @@ a, button, [role="button"], [tabindex], select, label,
   box-shadow: 0 0 0 2px var(--clr-accent);
 }
 
-/* ─── Sort / Filter Bar ─────────────────────────────────────── */
+/* sort bar */
 
 .sort-filter-bar {
   padding: 10px 0 14px;
@@ -946,14 +937,8 @@ a, button, [role="button"], [tabindex], select, label,
 }
 
 
-/* ============================================================
-   CHERRY ON TOP — New Feature Styles
-   ============================================================ */
-
-/* ─── Movie Card: pointer cursor (clickable for modal) ───── */
 .movie-card { cursor: pointer; }
 
-/* ─── Trending Header Right ──────────────────────────────── */
 .trending-header-right {
   display: flex;
   align-items: center;
@@ -961,7 +946,7 @@ a, button, [role="button"], [tabindex], select, label,
   flex-wrap: wrap;
 }
 
-/* ─── Surprise Me Button ─────────────────────────────────── */
+
 .btn-surprise {
   display: inline-flex;
   align-items: center;
@@ -991,7 +976,7 @@ a, button, [role="button"], [tabindex], select, label,
   box-shadow: 0 0 0 2px #a855f7;
 }
 
-/* ─── Movie Detail Modal ─────────────────────────────────── */
+/* modal */
 
 @keyframes modalIn {
   from { opacity: 0; transform: scale(0.95) translateY(16px); }
@@ -1196,7 +1181,7 @@ a, button, [role="button"], [tabindex], select, label,
   text-decoration: none;
 }
 
-/* Modal skeleton */
+
 .modal-skeleton {
   display: grid;
   grid-template-columns: 180px 1fr;
@@ -1231,7 +1216,7 @@ a, button, [role="button"], [tabindex], select, label,
   .modal-title { font-size: 18px; padding-right: 40px; }
 }
 
-/* ─── Watchlist Stats Panel ──────────────────────────────── */
+/* watchlist stats */
 
 @keyframes statsSlideIn {
   from { opacity: 0; transform: translateY(-10px); }

@@ -1,10 +1,5 @@
-/**
- * watchlist.js — Manage the movie watchlist via localStorage
- */
-
 const STORAGE_KEY = 'cinevault_watchlist';
 
-/** getWatchlist: returns array of saved movie objects */
 const getWatchlist = () => {
   try {
     return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
@@ -13,19 +8,13 @@ const getWatchlist = () => {
   }
 };
 
-/** saveWatchlist: persist array to localStorage */
 const saveWatchlist = (list) => {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
 };
 
-/**
- * addToWatchlist: add a movie object to the watchlist
- * Stores only the minimal fields needed for display
- * @param {Object} movie  { imdbID, Title, Year, Poster, imdbRating }
- */
 const addToWatchlist = (movie) => {
   const list = getWatchlist();
-  if (list.find(m => m.imdbID === movie.imdbID)) return; // no duplicates
+  if (list.find(m => m.imdbID === movie.imdbID)) return;
   list.push({
     imdbID: movie.imdbID,
     Title: movie.Title,
@@ -36,28 +25,14 @@ const addToWatchlist = (movie) => {
   saveWatchlist(list);
 };
 
-/**
- * removeFromWatchlist: remove a movie by IMDb ID
- * @param {string} imdbId
- */
 const removeFromWatchlist = (imdbId) => {
-  const list = getWatchlist().filter(m => m.imdbID !== imdbId);
-  saveWatchlist(list);
+  saveWatchlist(getWatchlist().filter(m => m.imdbID !== imdbId));
 };
 
-/**
- * isInWatchlist: check if a movie is saved
- * @param {string} imdbId
- * @returns {boolean}
- */
 const isInWatchlist = (imdbId) => {
   return getWatchlist().some(m => m.imdbID === imdbId);
 };
 
-/**
- * getRandomMovie: returns a random movie from the watchlist, or null if empty
- * @returns {Object|null}
- */
 const getRandomMovie = () => {
   const list = getWatchlist();
   if (!list.length) return null;

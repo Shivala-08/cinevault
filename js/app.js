@@ -1,11 +1,5 @@
-/**
- * app.js — CineVault application entry point
- * Handles tab switching, search, pagination, trending, genre filter, sort, and watchlist
- */
-
 document.addEventListener('DOMContentLoaded', () => {
 
-  /* ─── State ─────────────────────────────────────────────── */
   let currentQuery   = '';
   let currentPage    = 1;
   let totalResults   = 0;
@@ -16,7 +10,6 @@ document.addEventListener('DOMContentLoaded', () => {
   let currentMovies  = [];
   let currentSort    = 'default';
 
-  /* ─── DOM refs ──────────────────────────────────────────── */
   const discoverScreen  = document.getElementById('discover-screen');
   const watchlistScreen = document.getElementById('watchlist-screen');
   const tabDiscover     = document.getElementById('tab-discover');
@@ -34,8 +27,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const logoBtn         = document.getElementById('logo-btn');
   const trendingSection = document.getElementById('trending-section');
   const sortFilterBar   = document.getElementById('sort-filter-bar');
-
-  /* ─── Helpers ───────────────────────────────────────────── */
 
   const syncSearchInputs = (value) => {
     if (searchInput)    searchInput.value    = value;
@@ -68,8 +59,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  /* ─── Trending View ─────────────────────────────────────── */
-
   const showTrendingView = () => {
     trendingSection?.classList.remove('hidden');
     discoverResults?.classList.add('hidden');
@@ -81,8 +70,6 @@ document.addEventListener('DOMContentLoaded', () => {
     trendingSection?.classList.add('hidden');
     discoverResults?.classList.remove('hidden');
   };
-
-  /* ─── Trending Sort Handler ─────────────────────────────── */
 
   const handleTrendingSort = (newSort) => {
     currentSort = newSort;
@@ -112,16 +99,12 @@ document.addEventListener('DOMContentLoaded', () => {
     renderSortBar('trending-sort-bar', 'default', trendingMovies.length, true, handleTrendingSort);
   };
 
-  /* ─── Sort Handler (search results) ─────────────────────── */
-
   const handleSortChange = (newSort) => {
     currentSort = newSort;
     const sorted = applySortToMovies(currentMovies, newSort);
     renderMovieCards(sorted, 'discover-results');
     renderSortBar('sort-filter-bar', newSort, totalResults, false, handleSortChange);
   };
-
-  /* ─── Tab Switching ─────────────────────────────────────── */
 
   const showScreen = (screen) => {
     activeScreen = screen;
@@ -144,8 +127,6 @@ document.addEventListener('DOMContentLoaded', () => {
   tabWatchlist.addEventListener('click', () => showScreen('watchlist'));
   logoBtn?.addEventListener('click', () => showScreen('discover'));
   logoBtn?.addEventListener('keydown', (e) => { if (e.key === 'Enter') showScreen('discover'); });
-
-  /* ─── Search ────────────────────────────────────────────── */
 
   const performSearch = async (query, page = 1) => {
     if (isLoading) return;
@@ -217,20 +198,16 @@ document.addEventListener('DOMContentLoaded', () => {
   searchClearBtn?.addEventListener('click', clearSearch);
   searchClearMob?.addEventListener('click', clearSearch);
 
-  /* ─── Watchlist Screen ──────────────────────────────────── */
-
   const renderWatchlistStats = (list) => {
     const statsEl = document.getElementById('watchlist-stats');
     if (!statsEl) return;
     if (list.length < 3) { statsEl.classList.add('hidden'); return; }
 
-    // Avg rating
     const rated = list.filter(m => m.imdbRating && m.imdbRating !== 'N/A');
     const avgRating = rated.length
       ? (rated.reduce((s, m) => s + parseFloat(m.imdbRating), 0) / rated.length).toFixed(1)
       : null;
 
-    // Genre breakdown from trending cache
     const genreCount = {};
     list.forEach(m => {
       if (!m.Genre) return;
@@ -279,10 +256,7 @@ document.addEventListener('DOMContentLoaded', () => {
     renderMovieCards(list, 'watchlist-grid');
   };
 
-  /* ─── Card Click → Open Modal ──────────────────────────── */
-
   const handleCardClick = (e) => {
-    // Don't open modal if clicking the watchlist button
     if (e.target.closest('.btn-watchlist') || e.target.closest('.modal-watchlist-btn')) return;
     const card = e.target.closest('.movie-card');
     if (!card) return;
@@ -294,8 +268,6 @@ document.addEventListener('DOMContentLoaded', () => {
   discoverResults?.addEventListener('click', handleCardClick);
   watchlistGrid?.addEventListener('click', handleCardClick);
   trendingSection?.addEventListener('click', handleCardClick);
-
-  /* ─── Card Button Click (event delegation) ──────────────── */
 
   const handleCardButtonClick = (e) => {
     const btn = e.target.closest('.btn-watchlist');
@@ -310,7 +282,6 @@ document.addEventListener('DOMContentLoaded', () => {
       addToWatchlist(movieObj);
       updateCardButton(imdbId, true);
       showToast(`"${title}" added to Watchlist ✓`, 'success');
-      // 🎉 Confetti burst from button position
       const rect = btn.getBoundingClientRect();
       runConfetti(rect.left + rect.width / 2, rect.top + rect.height / 2);
     } else {
@@ -319,7 +290,6 @@ document.addEventListener('DOMContentLoaded', () => {
       showToast(`"${title}" removed from Watchlist`, 'remove');
     }
 
-    // Also update modal button if modal is open
     const modalBtn = document.querySelector('.modal-watchlist-btn');
     if (modalBtn && modalBtn.dataset.id === imdbId) {
       modalBtn.textContent = isAdding ? '✓ In Watchlist' : '＋ Add to Watchlist';
@@ -335,8 +305,6 @@ document.addEventListener('DOMContentLoaded', () => {
   trendingSection?.addEventListener('click', handleCardButtonClick);
   document.getElementById('movie-modal')?.addEventListener('click', handleCardButtonClick);
 
-  /* ─── Random Movie Night ────────────────────────────────── */
-
   randomBtn?.addEventListener('click', () => {
     const movie = getRandomMovie();
     if (!movie) return;
@@ -346,13 +314,10 @@ document.addEventListener('DOMContentLoaded', () => {
     card.classList.add('spotlight');
     card.scrollIntoView({ behavior: 'smooth', block: 'center' });
     showToast(`🎲 Tonight: "${movie.Title}"`, 'success');
-    // Confetti burst from card center
     const rect = card.getBoundingClientRect();
     runConfetti(rect.left + rect.width / 2, rect.top + rect.height / 3);
     setTimeout(() => card.classList.remove('spotlight'), 3000);
   });
-
-  /* ─── Surprise Me Button ────────────────────────────────── */
 
   document.getElementById('surprise-btn')?.addEventListener('click', () => {
     if (!trendingMovies.length) {
@@ -368,8 +333,6 @@ document.addEventListener('DOMContentLoaded', () => {
     showToast(`🎲 How about "${randomMovie.Title}"?`, 'success');
   });
 
-  /* ─── Keyboard Navigation ───────────────────────────────── */
-
   document.addEventListener('keydown', (e) => {
     if (e.key === '/' && document.activeElement.tagName !== 'INPUT') {
       e.preventDefault();
@@ -377,8 +340,6 @@ document.addEventListener('DOMContentLoaded', () => {
       searchInput?.focus();
     }
   });
-
-  /* ─── Initial Load ──────────────────────────────────────── */
 
   updateWatchlistBadge();
 

@@ -1,9 +1,3 @@
-/**
- * ui.js — DOM rendering, skeleton loaders, toasts, spinner, pagination
- */
-
-/* ─── Helpers ─────────────────────────────────────────────── */
-
 const getPosterSrc = (poster) =>
   (!poster || poster === 'N/A') ? null : poster;
 
@@ -14,8 +8,6 @@ const getRatingColor = (rating) => {
   if (r >= 5) return '#FFC107';
   return '#E57373';
 };
-
-/* ─── Card HTML Builder ───────────────────────────────────── */
 
 const buildCardHTML = (movie) => {
   const posterSrc = getPosterSrc(movie.Poster);
@@ -60,13 +52,6 @@ const buildCardHTML = (movie) => {
   `;
 };
 
-/* ─── renderMovieCards ────────────────────────────────────── */
-
-/**
- * Render a list of movie cards into a container
- * @param {Array}  movies
- * @param {string} containerId
- */
 const renderMovieCards = (movies, containerId) => {
   const container = document.getElementById(containerId);
   if (!container) return;
@@ -79,13 +64,6 @@ const renderMovieCards = (movies, containerId) => {
   container.innerHTML = `<div class="movies-grid">${movies.map(buildCardHTML).join('')}</div>`;
 };
 
-/* ─── renderSkeletons ─────────────────────────────────────── */
-
-/**
- * Show N skeleton loader cards in a container
- * @param {number} count
- * @param {string} containerId
- */
 const renderSkeletons = (count, containerId) => {
   const container = document.getElementById(containerId);
   if (!container) return;
@@ -104,13 +82,6 @@ const renderSkeletons = (count, containerId) => {
   container.innerHTML = `<div class="movies-grid">${skeletonCard.repeat(count)}</div>`;
 };
 
-/* ─── renderEmptyState ────────────────────────────────────── */
-
-/**
- * Render the appropriate empty state
- * @param {string} containerId
- * @param {'search'|'watchlist'|'no-results'|'no-key'|'error'} type
- */
 const renderEmptyState = (containerId, type) => {
   const container = document.getElementById(containerId);
   if (!container) return;
@@ -160,15 +131,8 @@ const renderEmptyState = (containerId, type) => {
   `;
 };
 
-/* ─── showToast ───────────────────────────────────────────── */
-
 let toastTimer;
 
-/**
- * Show a toast notification
- * @param {string} message
- * @param {'success'|'remove'} type
- */
 const showToast = (message, type = 'success') => {
   const toast = document.getElementById('toast');
   if (!toast) return;
@@ -178,7 +142,6 @@ const showToast = (message, type = 'success') => {
   toast.className = `toast toast-${type}`;
   toast.classList.remove('hidden');
 
-  // Trigger slide-up
   requestAnimationFrame(() => toast.classList.add('show'));
 
   toastTimer = setTimeout(() => {
@@ -190,8 +153,6 @@ const showToast = (message, type = 'success') => {
   }, 2500);
 };
 
-/* ─── Spinner ─────────────────────────────────────────────── */
-
 const showSpinner = () => {
   const el = document.getElementById('spinner-overlay');
   if (el) { el.classList.remove('hidden'); el.removeAttribute('aria-hidden'); }
@@ -202,13 +163,6 @@ const hideSpinner = () => {
   if (el) { el.classList.add('hidden'); el.setAttribute('aria-hidden', 'true'); }
 };
 
-/* ─── updateCardButton ────────────────────────────────────── */
-
-/**
- * Update a single card's watchlist button without re-rendering the whole grid
- * @param {string}  imdbId
- * @param {boolean} inList
- */
 const updateCardButton = (imdbId, inList) => {
   const btns = document.querySelectorAll(`.btn-watchlist[data-id="${imdbId}"]`);
   btns.forEach(btn => {
@@ -220,15 +174,6 @@ const updateCardButton = (imdbId, inList) => {
   });
 };
 
-/* ─── renderPagination ────────────────────────────────────── */
-
-/**
- * Render Previous/Next pagination controls
- * @param {number} currentPage
- * @param {number} totalResults
- * @param {string} containerId
- * @param {Function} onPageChange  callback(newPage)
- */
 const renderPagination = (currentPage, totalResults, containerId, onPageChange) => {
   const container = document.getElementById(containerId);
   if (!container) return;
@@ -255,22 +200,12 @@ const renderPagination = (currentPage, totalResults, containerId, onPageChange) 
     </div>
   `;
 
-
   document.getElementById('page-prev')?.addEventListener('click', () => onPageChange(currentPage - 1));
   document.getElementById('page-next')?.addEventListener('click', () => onPageChange(currentPage + 1));
-
 };
-
-/* ─── Genre Chips ─────────────────────────────────────────── */
 
 const GENRES = ['All', 'Action', 'Comedy', 'Drama', 'Horror', 'Sci-Fi', 'Thriller', 'Animation', 'Romance', 'Crime'];
 
-/**
- * renderGenreChips: render clickable genre filter chips
- * @param {string}   containerId
- * @param {string}   selectedGenre
- * @param {Function} onClick  callback(genre)
- */
 const renderGenreChips = (containerId, selectedGenre, onClick) => {
   const container = document.getElementById(containerId);
   if (!container) return;
@@ -286,8 +221,6 @@ const renderGenreChips = (containerId, selectedGenre, onClick) => {
   );
 };
 
-/* ─── Sort / Filter Bar ───────────────────────────────────── */
-
 const SORT_OPTIONS = [
   { value: 'default',     label: 'Relevance' },
   { value: 'year-desc',   label: '📅 Newest' },
@@ -296,14 +229,6 @@ const SORT_OPTIONS = [
   { value: 'rating-desc', label: '⭐ Top Rated' },
 ];
 
-/**
- * renderSortBar: render the sort/filter toolbar with result count
- * @param {string}   containerId
- * @param {string}   currentSort
- * @param {number}   totalCount
- * @param {boolean}  showRating   show rating sort option (only for trending)
- * @param {Function} onSortChange callback(sortValue)
- */
 const renderSortBar = (containerId, currentSort, totalCount, showRating, onSortChange) => {
   const container = document.getElementById(containerId);
   if (!container) return;
@@ -323,13 +248,6 @@ const renderSortBar = (containerId, currentSort, totalCount, showRating, onSortC
   );
 };
 
-/* ─── Trending Section ────────────────────────────────────── */
-
-/**
- * renderTrendingSection: render a grid of trending movie cards
- * @param {Array}  movies
- * @param {string} containerId
- */
 const renderTrendingSection = (movies, containerId) => {
   const container = document.getElementById(containerId);
   if (!container) return;
