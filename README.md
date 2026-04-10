@@ -3,16 +3,16 @@
 > **Your personal dark-themed cinema hub** — search millions of movies, browse trending picks, and build a watchlist that lives right in your browser.
 
 [![Live Demo](https://img.shields.io/badge/Live%20Demo-Vercel-black?style=flat&logo=vercel)](https://cinevault-eight-red.vercel.app/)
-[![No Framework](https://img.shields.io/badge/No%20Framework-Vanilla%20JS-f7df1e?style=flat&logo=javascript&logoColor=black)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
 [![HTML5](https://img.shields.io/badge/HTML5-Semantic-e34f26?style=flat&logo=html5&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/HTML)
 [![CSS3](https://img.shields.io/badge/CSS3-Custom%20Properties-1572b6?style=flat&logo=css3&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/CSS)
+[![JavaScript](https://img.shields.io/badge/JavaScript-ES6+-f7df1e?style=flat&logo=javascript&logoColor=black)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
 [![OMDb API](https://img.shields.io/badge/Powered%20by-OMDb%20API-gold?style=flat)](https://www.omdbapi.com/)
 
 ---
 
 ## 🖼 Preview
 
-CineVault is a **zero-dependency, no-build** web app. Every feature runs with plain HTML, CSS, and JavaScript — no React, no Vue, no Angular, no npm.
+CineVault is a **zero-dependency, no-build** web app. Every feature runs with plain HTML, CSS, and JavaScript.
 
 ---
 
@@ -41,13 +41,11 @@ CineVault is a **zero-dependency, no-build** web app. Every feature runs with pl
 
 ## 🛠 Tech Stack
 
-> **No framework. No build step. No npm. No dependencies.**
-
 | Layer | Technology |
 |---|---|
 | Structure | **HTML5** — Semantic markup, ARIA roles, tab panels |
 | Styling | **CSS3** — Custom properties, Grid, Flexbox, keyframe animations, skeleton shimmer |
-| Logic | **Vanilla JavaScript (ES6+)** — async/await, event delegation, localStorage |
+| Logic | **JavaScript (ES6+)** — async/await, event delegation, localStorage |
 | Data | **OMDb API** — Real movie posters, IMDb ratings, cast, plot |
 | Fonts | **Google Fonts** — Inter (400/500/600/700) |
 | Hosting | **Vercel** — Static deployment, auto-deploys from GitHub |
@@ -159,4 +157,4 @@ MIT — free to use, fork, and modify for personal or educational projects.
 
 ---
 
-<p align="center">Made with ❤️ using zero frameworks · Vanilla HTML, CSS & JS only</p>
+<p align="center">Made with ❤️ · HTML, CSS & JavaScript</p>
