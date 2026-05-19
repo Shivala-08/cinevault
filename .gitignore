@@ -1,16 +1,41 @@
-# 🍿 CineVault Environments
-.env
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
-# 🔑 Private Config (config.js is now tracked for Vercel deployment)
-# js/config.js
+# dependencies
+/node_modules
+/.pnp
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
 
-# 💻 OS/IDE Clutter
+# testing
+/coverage
+
+# next.js
+/.next/
+/out/
+
+# production
+/build
+
+# misc
 .DS_Store
-.vscode/
-.idea/
-node_modules/
-dist/
-build/
+*.pem
+
+# debug
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+.pnpm-debug.log*
+
+# env files (can opt-in for committing if needed)
+.env*
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
