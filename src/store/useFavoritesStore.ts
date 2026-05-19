@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import { Movie } from "@/lib/tmdb";
+import { Movie } from "@/types/movie";
 
 interface FavoritesState {
   favorites: Movie[];
