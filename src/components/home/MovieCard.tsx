@@ -74,8 +74,8 @@ export function MovieCard({ movie, index }: MovieCardProps) {
           </div>
 
           <div className="flex items-center gap-2">
-            <button className="flex-1 bg-white text-black py-1.5 rounded flex items-center justify-center gap-1 text-sm font-semibold hover:bg-gray-200 transition-colors">
-              <Play className="w-4 h-4 fill-current" /> Play
+            <button className="flex-1 bg-white text-black py-1.5 px-1 rounded flex items-center justify-center gap-1 text-xs sm:text-sm font-semibold hover:bg-gray-200 transition-colors">
+              <Play className="w-3 sm:w-4 h-3 sm:h-4 fill-current" /> Play
             </button>
             <button 
               onClick={handleWatchlistToggle}

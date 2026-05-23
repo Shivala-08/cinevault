@@ -69,7 +69,7 @@ export function TrailerModal({ movieId, isOpen, onClose }: TrailerModalProps) {
 
   return (
     <AnimatePresence>
-      <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-12 mt-12 md:mt-0">
+      <div className="fixed inset-0 z-[100] flex items-center justify-center p-2 sm:p-4 md:p-12 mt-12 sm:mt-0">
         {/* Backdrop */}
         <motion.div
           initial={{ opacity: 0 }}
@@ -130,7 +130,7 @@ export function TrailerModal({ movieId, isOpen, onClose }: TrailerModalProps) {
 
             {/* Movie Info Section */}
             {movieDetails && (
-              <div className="px-6 md:px-8 pb-8 -mt-12 relative z-30 flex flex-col md:flex-row gap-6 md:gap-8">
+              <div className="px-4 sm:px-6 md:px-8 pb-8 -mt-12 relative z-30 flex flex-col md:flex-row gap-6 md:gap-8">
                 {/* Poster Thumbnail */}
                 <div className="w-32 md:w-48 shrink-0 rounded-lg overflow-hidden shadow-2xl border border-gray-800 bg-[#141414] mx-auto md:mx-0 -mt-20 md:-mt-12">
                   {/* eslint-disable-next-line @next/next/no-img-element */}

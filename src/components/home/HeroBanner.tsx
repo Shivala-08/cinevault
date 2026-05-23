@@ -42,7 +42,7 @@ export function HeroBanner() {
   };
 
   return (
-    <section className="relative w-full h-[85vh] md:h-[95vh] flex items-center justify-start overflow-hidden">
+    <section className="relative w-full h-[75vh] sm:h-[85vh] md:h-[95vh] flex items-center justify-start overflow-hidden">
       <AnimatePresence mode="wait">
         <motion.div
           key={movie.id}
@@ -61,7 +61,7 @@ export function HeroBanner() {
         </motion.div>
       </AnimatePresence>
 
-      <div className="relative z-10 px-6 md:px-12 w-full max-w-4xl mt-16 md:mt-0">
+      <div className="relative z-10 px-4 sm:px-6 md:px-12 w-full max-w-4xl mt-16 md:mt-0">
         <AnimatePresence mode="wait">
           <motion.div
             key={`content-${movie.id}`}
@@ -73,7 +73,7 @@ export function HeroBanner() {
             <span className="text-primary font-medium tracking-widest uppercase text-sm mb-4 block">
               Trending #{currentIndex + 1}
             </span>
-            <h1 className="text-5xl md:text-7xl font-bold text-foreground leading-tight tracking-tight mb-4 drop-shadow-xl line-clamp-2">
+            <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold text-foreground leading-tight tracking-tight mb-4 drop-shadow-xl line-clamp-2">
               {movie.title || movie.name}
             </h1>
             
@@ -87,11 +87,11 @@ export function HeroBanner() {
               {movie.overview}
             </p>
 
-            <div className="flex flex-wrap items-center gap-4">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pr-4 sm:pr-0">
               <Button 
                 onClick={() => setIsModalOpen(true)}
                 size="lg" 
-                className="bg-foreground text-background hover:bg-foreground/90 font-semibold rounded-full px-8 gap-2 shadow-lg hover:scale-105 transition-transform"
+                className="bg-foreground text-background hover:bg-foreground/90 font-semibold rounded-full px-8 gap-2 shadow-lg hover:scale-105 transition-transform w-full sm:w-auto"
               >
                 <Play className="w-5 h-5 fill-current" />
                 Play Trailer
@@ -100,7 +100,7 @@ export function HeroBanner() {
                 onClick={handleWatchlistToggle}
                 size="lg" 
                 variant="secondary" 
-                className={`backdrop-blur-md font-semibold rounded-full px-8 gap-2 shadow-lg transition-all ${inWatchlist ? 'bg-primary/20 border-primary text-primary hover:bg-primary/30' : 'bg-secondary/50 text-foreground hover:bg-secondary border border-border hover:scale-105'}`}
+                className={`backdrop-blur-md font-semibold rounded-full px-8 gap-2 shadow-lg transition-all w-full sm:w-auto ${inWatchlist ? 'bg-primary/20 border-primary text-primary hover:bg-primary/30' : 'bg-secondary/50 text-foreground hover:bg-secondary border border-border hover:scale-105'}`}
               >
                 {inWatchlist ? <Check className="w-5 h-5" /> : <Plus className="w-5 h-5" />}
                 {inWatchlist ? "In Watchlist" : "Add To Watchlist"}
@@ -109,7 +109,7 @@ export function HeroBanner() {
                 onClick={() => setIsModalOpen(true)}
                 size="icon" 
                 variant="ghost" 
-                className="rounded-full bg-secondary/30 backdrop-blur-md hover:bg-secondary border border-border h-11 w-11 shadow-lg hover:scale-105 transition-transform"
+                className="hidden sm:flex rounded-full bg-secondary/30 backdrop-blur-md hover:bg-secondary border border-border h-11 w-11 shadow-lg hover:scale-105 transition-transform shrink-0"
               >
                 <Info className="w-5 h-5" />
               </Button>
@@ -119,7 +119,7 @@ export function HeroBanner() {
       </div>
       
       {/* Indicator Dots */}
-      <div className="absolute bottom-12 left-6 md:left-12 z-20 flex gap-2">
+      <div className="absolute bottom-8 sm:bottom-12 left-4 sm:left-6 md:left-12 z-20 flex gap-2">
         {movies?.map((_, idx) => (
           <button
             key={idx}

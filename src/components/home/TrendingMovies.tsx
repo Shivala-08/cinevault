@@ -39,7 +39,7 @@ export function TrendingMovies() {
   const movies = data?.pages.flatMap((page) => page.results) || [];
 
   return (
-    <section className="px-6 md:px-12 py-12 relative z-10 bg-background mt-[-100px] min-h-[50vh]">
+    <section className="px-4 sm:px-6 md:px-12 py-12 relative z-10 bg-background mt-[-100px] min-h-[50vh]">
       <h2 className="text-2xl font-semibold text-white mb-6">Trending Movies</h2>
       
       {isLoading && <MovieRowSkeleton />}
@@ -52,7 +52,7 @@ export function TrendingMovies() {
 
       {movies.length > 0 && (
         <>
-          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-6">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 sm:gap-6">
             {movies.map((movie: any, index: number) => (
               <MovieCard key={`${movie.id}-${index}`} movie={movie} index={index % 20} />
             ))}

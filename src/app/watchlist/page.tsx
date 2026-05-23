@@ -10,8 +10,8 @@ export default function WatchlistPage() {
   return (
     <main className="flex-1 flex flex-col relative w-full min-h-screen">
       <Navbar />
-      <div className="px-6 md:px-12 py-32 relative z-10 bg-background flex-1">
-        <h1 className="text-4xl font-bold text-white mb-8">My Watchlist</h1>
+      <div className="px-4 sm:px-6 md:px-12 py-24 sm:py-32 relative z-10 bg-background flex-1">
+        <h1 className="text-3xl sm:text-4xl font-bold text-white mb-6 sm:mb-8">My Watchlist</h1>
         
         {watchlist.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-20 text-secondary-foreground">
@@ -19,7 +19,7 @@ export default function WatchlistPage() {
             <p>Explore movies and add them to your list!</p>
           </div>
         ) : (
-          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-6">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 sm:gap-6">
             {watchlist.map((movie, index) => (
               <MovieCard key={movie.id} movie={movie} index={index} />
             ))}

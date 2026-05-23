@@ -47,7 +47,7 @@ export function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
       {isOpen && (
         <div className="fixed inset-0 z-[100] flex flex-col bg-background/95 backdrop-blur-md">
           {/* Header */}
-          <div className="w-full p-6 md:px-12 md:py-8 flex items-center gap-4 border-b border-border">
+          <div className="w-full p-4 sm:p-6 md:px-12 md:py-8 flex items-center gap-4 border-b border-border">
             <Search className="w-6 h-6 text-muted-foreground" />
             <input
               ref={inputRef}
@@ -55,15 +55,15 @@ export function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
               placeholder="Search movies, actors, genres..."
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              className="flex-1 bg-transparent text-2xl md:text-4xl font-semibold text-foreground outline-none placeholder:text-muted-foreground/50"
+              className="flex-1 bg-transparent text-xl sm:text-2xl md:text-4xl font-semibold text-foreground outline-none placeholder:text-muted-foreground/50"
             />
             <button onClick={onClose} className="p-2 hover:bg-secondary rounded-full transition-colors">
-              <X className="w-8 h-8 text-foreground" />
+              <X className="w-6 sm:w-8 h-6 sm:h-8 text-foreground" />
             </button>
           </div>
 
           {/* Results */}
-          <div className="flex-1 overflow-y-auto p-6 md:p-12 custom-scrollbar">
+          <div className="flex-1 overflow-y-auto p-4 sm:p-6 md:p-12 custom-scrollbar">
             {query.length > 2 && isLoading && (
               <div className="text-center text-muted-foreground">Searching cinematic universe...</div>
             )}
@@ -73,7 +73,7 @@ export function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
             )}
 
             {results && results.length > 0 && (
-              <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-6">
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 sm:gap-6">
                 {results.map((movie, index) => (
                   <MovieCard key={movie.id} movie={movie} index={index} />
                 ))}

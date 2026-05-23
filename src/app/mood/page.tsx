@@ -22,20 +22,20 @@ export default function MoodPage() {
   return (
     <main className="flex-1 flex flex-col relative w-full min-h-screen">
       <Navbar />
-      <div className="px-6 md:px-12 py-32 relative z-10 bg-background flex-1 flex flex-col items-center">
+      <div className="px-4 sm:px-6 md:px-12 py-24 sm:py-32 relative z-10 bg-background flex-1 flex flex-col items-center">
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-16 max-w-2xl"
         >
-          <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">What's your mood?</h1>
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-6">What's your mood?</h1>
           <p className="text-xl text-secondary-foreground">
             Select how you're feeling, and we'll curate the perfect cinematic experience for you.
           </p>
         </motion.div>
         
         {/* Mood Selection Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-6 max-w-4xl w-full mb-16">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 max-w-4xl w-full mb-16">
           {MOODS.map((mood, i) => {
             const Icon = (Icons as any)[mood.icon] || Icons.Film;
             const isActive = activeMood?.id === mood.id;
@@ -92,7 +92,7 @@ export default function MoodPage() {
                 {isLoading ? (
                   <MovieRowSkeleton />
                 ) : (
-                  <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-6">
+                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 sm:gap-6">
                     {movies?.results.map((movie: any, index: number) => (
                       <MovieCard key={movie.id} movie={movie} index={index} />
                     ))}
